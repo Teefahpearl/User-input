@@ -12,7 +12,7 @@ function App() {
         setError(null);
 
         try {
-            const response = await fetch('https://damp-lake-56874-184473373b9b.herokuapp.com/send-email', {
+            const response = await fetch('https://lit-basin-94543-b1635a413bba.herokuapp.com/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ function App() {
               {loading ? (
                   <button className='border-2 rounded-md border-black' type="submit" disabled>Loading...</button>
               ) : (
-                  <button className='border rounded-md border-black' type="submit" >Submit</button>
+                  <button className='border rounded-md border-black' type="submit" >Check</button>
               )}
               {error && <p className="error">{error}</p>}
         </form>
