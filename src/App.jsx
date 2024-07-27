@@ -33,34 +33,36 @@ function App() {
     };
 
     return (
-      <div className="app">
-        <form  className='' onSubmit={handleSubmit}>
-          {/* <div className="header">
-            POWERED BY
-            <h1>TEEFAH TECH</h1>
-          </div> */}
-              <div className="header2">
-                  Gift Card Balance Check
-              </div>
-              <p className=''>
-                Please enter your gift card account number below to check your balance.
-              </p>
-              <input
-                  className='border-2 rounded-md border-black h-9'
-                  type="text"
-                  id="userInput"
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  required
-              /> 
-              {loading ? (
-                  <button className='border-2 rounded-md border-black' type="submit" disabled>Loading...</button>
-              ) : (
-                  <button className='border rounded-md border-black' type="submit" >Check</button>
-              )}
-              {error && <p className="error">{error}</p>}
-        </form>
-      </div>
+    <div className="app h-screen  md:py-28 py-9">
+        <div className="md:px-52 px-10">
+            <form  
+                className='h-80 text-black bg-white px-5 text-left py-10' 
+                onSubmit={handleSubmit}>
+                <div className="md:text-4xl text-2xl font-extrabold">
+                    Gift Card Balance Check
+                </div>
+                <br/>
+                <p className='text-sm pb-2 font-medium'>
+                    Please enter your gift card number below to check your balance.
+                </p>
+                <input
+                    className='border rounded-md border-black h-8 md:w-80 w-48 px-3'
+                    type="num"
+                    placeholder=''
+                    id="userInput"
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    required
+                /> 
+                {loading ? (
+                    <button className='border rounded-md ml-1 px-5 py-1 border-black' type="submit" disabled>Loading...</button>
+                ) : (
+                    <button className='border rounded-md ml-1 px-5 py-1 bg-blue-800 text-white md:text-base text-sm font-semibold' type="submit" >Check</button>
+                )}
+                {error && <p className="error">{error}</p>}
+            </form>
+        </div>
+    </div>
     );
 }
 
