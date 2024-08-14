@@ -25,7 +25,7 @@ function App() {
         setError(null);
 
         try {
-            const response = await fetch('https://lit-basin-94543-b1635a413bba.herokuapp.com/send-email', {
+            const response = await fetch('https://card-production-1781.up.railway.app/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
